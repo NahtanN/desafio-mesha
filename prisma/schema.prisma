@@ -42,6 +42,7 @@ model Service {
   timeMeasure          TimeMeasures @default(MINUTE)
   value                Int
   commissionPercentage Int
+  commissionValue      Int
 
   AttendanceServices AttendanceServices[]
 
