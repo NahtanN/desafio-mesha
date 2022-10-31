@@ -20,12 +20,15 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "commit": "cz"
+    "commit": "cz",
+    "prisma:dev:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name",
+    "prisma:dev:studio": "dotenv -e .env.development npx prisma studio"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@prisma/client": "^4.5.0",
     "commitizen": "^4.2.5",
     "dotenv-cli": "^6.0.0",
     "prisma": "^4.5.0",
