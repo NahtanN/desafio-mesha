@@ -8,7 +8,7 @@ import { ServiceService } from './service.service';
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 
-  @Post('/create')
+  @Post()
   async createService(
     @Body() createServiceBody: CreateServiceDto,
   ): Promise<HttpResponse> {

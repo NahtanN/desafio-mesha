@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Attendance" ALTER COLUMN "startedIn" DROP NOT NULL,
+ALTER COLUMN "endedIn" DROP NOT NULL;

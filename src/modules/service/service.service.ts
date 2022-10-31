@@ -7,13 +7,23 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ServiceService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  async find(where: Prisma.ServiceWhereInput, select?: Prisma.ServiceSelect) {
+    try {
+      return await this.prismaService.service.findFirst({
+        where,
+        select,
+      });
+    } catch (err) {
+      throw HttpResponse.internalServerError(err);
+    }
+  }
+
   async create(data: Prisma.ServiceCreateInput) {
     try {
       return await this.prismaService.service.create({
         data,
       });
     } catch (err) {
-      console.log(err);
       throw HttpResponse.internalServerError(err);
     }
   }
