@@ -12,4 +12,14 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       await app.close();
     });
   }
+
+  async cleanDatabase() {
+    if (process.env.NODE_ENV === 'production') return;
+
+    this.client.deleteMany();
+    this.employee.deleteMany();
+    this.service.deleteMany();
+    this.attendance.deleteMany();
+    this.attendanceServices.deleteMany();
+  }
 }

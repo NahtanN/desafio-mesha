@@ -23,7 +23,10 @@
     "commit": "cz",
     "prisma:dev:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name",
     "prisma:dev:push": "dotenv -e .env.development -- npx prisma db push",
-    "prisma:dev:studio": "dotenv -e .env.development npx prisma studio"
+    "prisma:dev:studio": "dotenv -e .env.development npx prisma studio",
+    "pretest:int": "yarn restart:db && dotenv -e .env.test -- prisma migrate reset --force",
+    "restart:db": "docker-compose -p testing -f infra/docker-compose.test.yml down && docker-compose -f infra/docker-compose.test.yml up -d && sleep 1",
+    "test:int": "dotenv -e .env.test -- jest -i --no-cache --watch --config jest-int.json"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
