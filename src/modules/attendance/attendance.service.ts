@@ -23,7 +23,6 @@ export class AttendanceService {
         select,
       });
     } catch (err) {
-      console.log(err);
       throw HttpResponse.internalServerError(err);
     }
   }
@@ -38,7 +37,20 @@ export class AttendanceService {
         select,
       });
     } catch (err) {
-      console.log(err);
+      throw HttpResponse.internalServerError(err);
+    }
+  }
+
+  async findMany(
+    where: Prisma.AttendanceWhereInput,
+    select?: Prisma.AttendanceSelect,
+  ) {
+    try {
+      return await this.prismaService.attendance.findMany({
+        where,
+        select,
+      });
+    } catch (err) {
       throw HttpResponse.internalServerError(err);
     }
   }

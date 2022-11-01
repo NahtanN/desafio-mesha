@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { HttpResponse } from 'src/utils';
 import { AttendanceService } from './attendance.service';
 import { CreateAttendance } from './dto';
@@ -7,8 +7,40 @@ import { CreateAttendance } from './dto';
 export class AttendanceController {
   constructor(private readonly attendanceService: AttendanceService) {}
 
+  @Get()
+  async getAttendances(): Promise<HttpResponse> {
+    const attendances = await this.attendanceService.findMany(
+      {
+        deletedAt: null,
+        employeeId: null,
+      },
+      {
+        Client: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+        AttendanceServices: {
+          select: {
+            Service: {
+              select: {
+                name: true,
+                description: true,
+                estimatedTime: true,
+                timeMeasure: true,
+              },
+            },
+          },
+        },
+      },
+    );
+
+    return HttpResponse.ok('Atendimentos retornados com sucesso!', attendances);
+  }
+
   @Post()
-  async create(
+  async createAttendances(
     @Body() createAttendanceBody: CreateAttendance,
   ): Promise<HttpResponse> {
     const { services } = createAttendanceBody;

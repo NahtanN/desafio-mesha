@@ -1,5 +1,5 @@
 import { Controller, Param, Patch } from '@nestjs/common';
-import { Attendance, Prisma, TimeMeasures } from '@prisma/client';
+import { Attendance } from '@prisma/client';
 import { HttpResponse } from 'src/utils';
 import { AttendanceService } from '../attendance/attendance.service';
 import { EmployeeService } from './employee.service';
