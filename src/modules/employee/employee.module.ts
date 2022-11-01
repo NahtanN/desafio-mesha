@@ -7,5 +7,6 @@ import { EmployeeService } from './employee.service';
   imports: [AttendanceModule],
   controllers: [EmployeeController],
   providers: [EmployeeService],
+  exports: [EmployeeService],
 })
 export class EmployeeModule {}

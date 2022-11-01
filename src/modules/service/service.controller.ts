@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Prisma, TimeMeasures } from '@prisma/client';
 import { HttpResponse } from 'src/utils';
+import { Employee } from '../auth/decorator';
 import { CreateServiceDto } from './dto';
 import { ServiceService } from './service.service';
 

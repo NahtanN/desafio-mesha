@@ -1,8 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { TimeMeasures } from '@prisma/client';
+import { Prisma, TimeMeasures } from '@prisma/client';
+import { HttpResponse } from 'src/utils';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class EmployeeService {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async find(where: Prisma.EmployeeWhereInput, select?: Prisma.EmployeeSelect) {
+    try {
+      return await this.prismaService.employee.findFirst({
+        where,
+        select,
+      });
+    } catch (err) {
+      throw HttpResponse.internalServerError(err);
+    }
+  }
+
+  async create(data: Prisma.EmployeeCreateInput) {
+    try {
+      return await this.prismaService.employee.create({ data });
+    } catch (err) {
+      console.log(err);
+      throw HttpResponse.internalServerError(err);
+    }
+  }
+
   calculateTimeElapsed(startedIn: Date) {
     const startedInDate = new Date(startedIn);
     const endedIn = new Date();

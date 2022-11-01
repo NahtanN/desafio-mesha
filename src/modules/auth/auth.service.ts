@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { pbkdf2Sync, randomBytes } from 'crypto';
-import { TokenType } from './types';
+import { TokenAccessType, TokenType } from './types';
 
 @Injectable()
 export class AuthService {
@@ -13,10 +13,11 @@ export class AuthService {
    * @param userId
    * @returns access_token
    */
-  async getTokens(email: string, clientId: number) {
+  async getTokens(email: string, clientId: number, access: TokenAccessType) {
     const payload: TokenType = {
       sub: clientId,
       email,
+      access,
     };
 
     const access_token = this.jwtService.sign(payload, {

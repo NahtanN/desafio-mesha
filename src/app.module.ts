@@ -10,6 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './modules/auth/guards';
 import { ClientModule } from './modules/client/client.module';
+import { AccessControlGuard } from './modules/auth/guards/access-control.guard';
 
 @Module({
   imports: [
@@ -29,6 +30,10 @@ import { ClientModule } from './modules/client/client.module';
     {
       provide: APP_GUARD,
       useClass: AtGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AccessControlGuard,
     },
     AppService,
   ],
