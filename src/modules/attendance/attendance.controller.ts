@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { HttpResponse } from 'src/utils';
+import { Employee, GetCurrentUser } from '../auth/decorator';
 import { AttendanceService } from './attendance.service';
 import { CreateAttendance } from './dto';
 
@@ -7,6 +8,7 @@ import { CreateAttendance } from './dto';
 export class AttendanceController {
   constructor(private readonly attendanceService: AttendanceService) {}
 
+  @Employee()
   @Get()
   async getAttendances(): Promise<HttpResponse> {
     const attendances = await this.attendanceService.findMany(
@@ -15,6 +17,7 @@ export class AttendanceController {
         employeeId: null,
       },
       {
+        id: true,
         Client: {
           select: {
             name: true,
@@ -41,6 +44,7 @@ export class AttendanceController {
 
   @Post()
   async createAttendances(
+    @GetCurrentUser('sub') sub: number,
     @Body() createAttendanceBody: CreateAttendance,
   ): Promise<HttpResponse> {
     const { services } = createAttendanceBody;
@@ -48,21 +52,34 @@ export class AttendanceController {
     const { totalCommissionPercentage, totalCommissionValue, totalValue } =
       await this.attendanceService.cauculateAttendanceValues(services);
 
-    const attendance = await this.attendanceService.create({
-      Client: {
-        connect: {
-          id: 1,
+    const attendance = await this.attendanceService.create(
+      {
+        Client: {
+          connect: {
+            id: sub,
+          },
         },
-      },
-      AttendanceServices: {
-        createMany: {
-          data: services.map((serviceId) => ({ serviceId })),
+        AttendanceServices: {
+          createMany: {
+            data: services.map((serviceId) => ({ serviceId })),
+          },
         },
+        totalCommissionPercentage,
+        totalCommissionValue,
+        totalValue,
       },
-      totalCommissionPercentage,
-      totalCommissionValue,
-      totalValue,
-    });
+      {
+        id: true,
+        Client: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+        totalValue: true,
+        createdAt: true,
+      },
+    );
 
     return HttpResponse.created('Atendimento criado!', attendance);
   }

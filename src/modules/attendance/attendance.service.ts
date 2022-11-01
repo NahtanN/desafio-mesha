@@ -55,9 +55,12 @@ export class AttendanceService {
     }
   }
 
-  async create(data: Prisma.AttendanceCreateInput) {
+  async create(
+    data: Prisma.AttendanceCreateInput,
+    select?: Prisma.AttendanceSelect,
+  ) {
     try {
-      return await this.prismaService.attendance.create({ data });
+      return await this.prismaService.attendance.create({ data, select });
     } catch (err) {
       throw HttpResponse.internalServerError(err);
     }

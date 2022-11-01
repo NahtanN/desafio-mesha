@@ -27,6 +27,7 @@ export class ServiceController {
     return HttpResponse.ok('Serviços retornado com sucesso!', services);
   }
 
+  @Employee()
   @Post()
   async createService(
     @Body() createServiceBody: CreateServiceDto,
