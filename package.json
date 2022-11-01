@@ -22,6 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "commit": "cz",
     "prisma:dev:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name",
+    "prisma:dev:push": "dotenv -e .env.development -- npx prisma db push",
     "prisma:dev:studio": "dotenv -e .env.development npx prisma studio"
   },
   "dependencies": {

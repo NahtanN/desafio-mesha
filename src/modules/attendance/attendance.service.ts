@@ -11,6 +11,38 @@ export class AttendanceService {
     private readonly serviceService: ServiceService,
   ) {}
 
+  async update(
+    where: Prisma.AttendanceWhereUniqueInput,
+    data: Prisma.AttendanceUpdateInput,
+    select?: Prisma.AttendanceSelect,
+  ) {
+    try {
+      return await this.prismaService.attendance.update({
+        where,
+        data,
+        select,
+      });
+    } catch (err) {
+      console.log(err);
+      throw HttpResponse.internalServerError(err);
+    }
+  }
+
+  async find(
+    where: Prisma.AttendanceWhereInput,
+    select?: Prisma.AttendanceSelect,
+  ) {
+    try {
+      return await this.prismaService.attendance.findFirst({
+        where,
+        select,
+      });
+    } catch (err) {
+      console.log(err);
+      throw HttpResponse.internalServerError(err);
+    }
+  }
+
   async create(data: Prisma.AttendanceCreateInput) {
     try {
       return await this.prismaService.attendance.create({ data });

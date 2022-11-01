@@ -52,11 +52,13 @@ model Service {
 }
 
 model Attendance {
-  id                        Int       @id @default(autoincrement())
+  id                        Int           @id @default(autoincrement())
   clientId                  Int
   employeeId                Int?
   startedIn                 DateTime?
   endedIn                   DateTime?
+  totalAttendanceTime       Int?
+  attendanceTimeMeasure     TimeMeasures?
   totalValue                Int
   totalCommissionPercentage Int
   totalCommissionValue      Int
