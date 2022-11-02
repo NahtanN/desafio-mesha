@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpResponse } from 'src/utils';
 import { GetCurrentUser, NotAuthorized, UserType } from '../auth/decorator';
 import { AttendanceService } from './attendance.service';
@@ -10,6 +10,12 @@ export class AttendanceController {
   constructor(private readonly attendanceService: AttendanceService) {}
 
   @ApiTags('Attendance')
+  @ApiHeader({
+    name: 'Authorization',
+    schema: {
+      example: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOj...',
+    },
+  })
   @ApiResponse({
     description: 'Retorna os atendimentos que ainda nao foram iniciados',
     status: 200,
@@ -74,6 +80,12 @@ export class AttendanceController {
   }
 
   @ApiTags('Attendance')
+  @ApiHeader({
+    name: 'Authorization',
+    schema: {
+      example: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOj...',
+    },
+  })
   @ApiBody({
     type: CreateAttendanceDto,
     description: 'Array com um ou mais IDs que representam os servicos',

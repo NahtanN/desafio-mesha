@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './filters/exception.filter';
 import { CustomValidationPipe } from './pipes/custom-validation.pipe';
+import { ApiDocdescription } from './utils';
 
 const port = process.env.PORT;
 
@@ -18,7 +19,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Clínica')
-    .setDescription('Documentação do Clínica')
+    .setDescription(ApiDocdescription)
     .setVersion('1.0')
     .build();
 

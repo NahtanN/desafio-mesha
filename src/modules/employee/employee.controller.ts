@@ -1,5 +1,5 @@
 import { Controller, Param, Patch } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Attendance } from '@prisma/client';
 import { HttpResponse } from 'src/utils';
 import { AttendanceService } from '../attendance/attendance.service';
@@ -14,6 +14,12 @@ export class EmployeeController {
   ) {}
 
   @ApiTags('Employee')
+  @ApiHeader({
+    name: 'Authorization',
+    schema: {
+      example: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOj...',
+    },
+  })
   @ApiResponse({
     description: 'Inicia um atendimento',
     status: 200,
@@ -97,6 +103,12 @@ export class EmployeeController {
   }
 
   @ApiTags('Employee')
+  @ApiHeader({
+    name: 'Authorization',
+    schema: {
+      example: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOj...',
+    },
+  })
   @ApiResponse({
     description: 'Finaliza um atendimento',
     status: 200,

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Prisma, TimeMeasures } from '@prisma/client';
 import { HttpResponse } from 'src/utils';
 import { NotAuthorized, UserType } from '../auth/decorator';
@@ -11,6 +11,12 @@ export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 
   @ApiTags('Service')
+  @ApiHeader({
+    name: 'Authorization',
+    schema: {
+      example: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOj...',
+    },
+  })
   @ApiResponse({
     status: 200,
     schema: {
@@ -55,6 +61,12 @@ export class ServiceController {
   }
 
   @ApiTags('Service')
+  @ApiHeader({
+    name: 'Authorization',
+    schema: {
+      example: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOj...',
+    },
+  })
   @ApiBody({
     type: CreateServiceDto,
     description:
