@@ -27,7 +27,7 @@
     "restart:db": "docker-compose -p testing -f infra/docker-compose.test.yml down && docker-compose -f infra/docker-compose.test.yml up -d && sleep 1",
     "test:int": "dotenv -e .env.test -- jest -i --no-cache --watch --config jest-int.json",
     "pretest:e2e": "yarn restart:db && dotenv -e .env.test -- prisma migrate reset --force",
-    "test:e2e": "dotenv -e .env.test -- jest -i --verbose --config ./test/jest-e2e.json "
+    "test:e2e": "dotenv -e .env.test -- jest --runInBand --no-cache --verbose --config ./test/jest-e2e.json "
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

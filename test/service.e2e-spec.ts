@@ -22,7 +22,6 @@ describe('ServiceController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     prisma = moduleFixture.get(PrismaService);
 
-    await prisma.cleanDatabase();
     await app.init();
   });
 
@@ -136,15 +135,16 @@ describe('ServiceController (e2e)', () => {
           expect(message).toBe('Serviços retornado com sucesso!');
           expect(data).toStrictEqual([
             {
-              name: 'servico 1',
-              description: 'Descricao do servico 1',
+              name: 'servico 3',
+              description: 'Descricao do servico 3',
               estimatedTime: 50,
-              value: 12376,
               timeMeasure: 'MINUTE',
+              value: 12376,
             },
           ]);
         });
     });
+
     it('Deve retornar os serviços disponiveis a partir de uma conta "employee"', async () => {
       const employeeLogedIn = await request(app.getHttpServer())
         .post(SigninRouteUrl)
@@ -171,14 +171,22 @@ describe('ServiceController (e2e)', () => {
           expect(message).toBe('Serviços retornado com sucesso!');
           expect(data).toStrictEqual([
             {
-              name: 'servico 1',
-              description: 'Descricao do servico 1',
+              name: 'servico 3',
+              description: 'Descricao do servico 3',
               estimatedTime: 50,
-              value: 12376,
               timeMeasure: 'MINUTE',
+              value: 12376,
             },
           ]);
         });
     });
+  });
+
+  afterAll(async () => {
+    await prisma.attendanceServices.deleteMany();
+    await prisma.attendance.deleteMany();
+    await prisma.service.deleteMany();
+    await prisma.client.deleteMany();
+    await prisma.employee.deleteMany();
   });
 });

@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 export const seedTestDataBase = async () => {
   const prisma = new PrismaClient();
@@ -24,13 +24,13 @@ export const seedTestDataBase = async () => {
         'abdd666e1debcb29ea2613853463ee036c1bfeb5ea1fb27c9d442f3673e83cf1a8a2146c9b4a17e48202bde8b7648d235595a64d73372b6d743d57c8cd398daa.1efb1e849cbb323964c676fbfd2d403f6532abdd8771f53fd3cf403a9a045f54',
     },
   });
+};
 
-  await prisma.service.upsert({
-    where: {
-      id: 1,
-    },
-    update: {},
-    create: {
+export const createServices = async () => {
+  const prisma = new PrismaClient();
+
+  const dbServices = [
+    {
       name: 'servico 1',
       description: 'Descricao do servico 1',
       estimatedTime: 50,
@@ -39,14 +39,7 @@ export const seedTestDataBase = async () => {
       commissionValue: 2104,
       timeMeasure: 'MINUTE',
     },
-  });
-
-  await prisma.service.upsert({
-    where: {
-      id: 2,
-    },
-    update: {},
-    create: {
+    {
       name: 'servico 2',
       description: 'Descricao do servico 2',
       estimatedTime: 50,
@@ -55,5 +48,68 @@ export const seedTestDataBase = async () => {
       commissionValue: 2104,
       timeMeasure: 'MINUTE',
     },
+  ];
+
+  const servicesIds = [];
+
+  for (let index = 1; index <= dbServices.length; ++index) {
+    const data = dbServices[index - 1];
+
+    const newService = await prisma.service.upsert({
+      where: {
+        id: index,
+      },
+      update: {},
+      create: data as Prisma.ServiceCreateInput,
+    });
+
+    servicesIds.push(newService.id);
+  }
+
+  return servicesIds;
+};
+
+export const createAttendance = async () => {
+  const prisma = new PrismaClient();
+
+  const attendance = await prisma.attendance.create({
+    data: {
+      Client: {
+        connectOrCreate: {
+          where: {
+            email: 'asdf@asdf.com',
+          },
+          create: {
+            email: 'asdf@asdf.com',
+            name: 'asdf',
+          },
+        },
+      },
+      totalValue: 37976,
+      totalCommissionPercentage: 1700,
+      totalCommissionValue: 6456,
+      AttendanceServices: {
+        create: {
+          Service: {
+            connectOrCreate: {
+              where: {
+                id: 1,
+              },
+              create: {
+                name: 'servico 1',
+                description: 'Descricao do servico 1',
+                estimatedTime: 50,
+                value: 12376,
+                commissionPercentage: 17,
+                commissionValue: 2104,
+                timeMeasure: 'MINUTE',
+              },
+            },
+          },
+        },
+      },
+    },
   });
+
+  return attendance.id;
 };

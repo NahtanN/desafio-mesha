@@ -28,7 +28,6 @@ describe('AuthController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     prisma = moduleFixture.get(PrismaService);
 
-    await prisma.cleanDatabase();
     await app.init();
   });
 
@@ -133,5 +132,13 @@ describe('AuthController (e2e)', () => {
           expect(message).toBe('Usuário ou senha incorretos!');
         });
     });
+  });
+
+  afterAll(async () => {
+    await prisma.attendanceServices.deleteMany();
+    await prisma.attendance.deleteMany();
+    await prisma.service.deleteMany();
+    await prisma.client.deleteMany();
+    await prisma.employee.deleteMany();
   });
 });

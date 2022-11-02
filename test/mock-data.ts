@@ -13,8 +13,8 @@ export const users = [
 
 export const servicesData = [
   {
-    name: 'servico 1',
-    description: 'Descricao do servico 1',
+    name: 'servico 3',
+    description: 'Descricao do servico 3',
     estimatedTime: 50,
     value: 12376,
     commissionPercentage: 17,
