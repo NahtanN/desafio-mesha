@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { HttpResponse } from 'src/utils';
-import { Employee, GetCurrentUser } from '../auth/decorator';
+import { GetCurrentUser, NotAuthorized, UserType } from '../auth/decorator';
 import { AttendanceService } from './attendance.service';
 import { CreateAttendance } from './dto';
 
@@ -8,7 +8,7 @@ import { CreateAttendance } from './dto';
 export class AttendanceController {
   constructor(private readonly attendanceService: AttendanceService) {}
 
-  @Employee()
+  @NotAuthorized(UserType.CLIENT)
   @Get()
   async getAttendances(): Promise<HttpResponse> {
     const attendances = await this.attendanceService.findMany(
@@ -42,6 +42,7 @@ export class AttendanceController {
     return HttpResponse.ok('Atendimentos retornados com sucesso!', attendances);
   }
 
+  @NotAuthorized(UserType.EMPLOYEE)
   @Post()
   async createAttendances(
     @GetCurrentUser('sub') sub: number,

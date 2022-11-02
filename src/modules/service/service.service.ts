@@ -29,6 +29,9 @@ export class ServiceService {
       return await this.prismaService.service.findMany({
         where,
         select,
+        orderBy: {
+          createdAt: 'asc',
+        },
       });
     } catch (err) {
       throw HttpResponse.internalServerError(err);

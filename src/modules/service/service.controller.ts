@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Prisma, TimeMeasures } from '@prisma/client';
 import { HttpResponse } from 'src/utils';
-import { Employee } from '../auth/decorator';
+import { NotAuthorized, UserType } from '../auth/decorator';
 import { CreateServiceDto } from './dto';
 import { ServiceService } from './service.service';
 
@@ -27,7 +27,7 @@ export class ServiceController {
     return HttpResponse.ok('Serviços retornado com sucesso!', services);
   }
 
-  @Employee()
+  @NotAuthorized(UserType.CLIENT)
   @Post()
   async createService(
     @Body() createServiceBody: CreateServiceDto,

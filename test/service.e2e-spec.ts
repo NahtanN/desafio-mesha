@@ -4,29 +4,7 @@ import { AppModule } from 'src/app.module';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { HttpResponse } from 'src/utils';
 import * as request from 'supertest';
-
-const users = [
-  {
-    name: 'Usuario Cliente',
-    email: 'cl@asdf.com',
-    password: '123456',
-  },
-  {
-    name: 'Usuario funcionario',
-    email: 'fn@asdf.com',
-    password: '123456',
-  },
-];
-
-const servicesData = [
-  {
-    name: 'servico 1',
-    description: 'Descricao do servico 1',
-    estimatedTime: 50,
-    value: 12376,
-    commissionPercentage: 17,
-  },
-];
+import { servicesData, users } from './mock-data';
 
 describe('ServiceController (e2e)', () => {
   const SignupRouteUrl = '/auth/signup';
@@ -130,6 +108,9 @@ describe('ServiceController (e2e)', () => {
           expect(message).toBe('Servico criado!');
         });
     });
+  });
+
+  describe(`${ServiceRouteUrl} (GET)`, () => {
     it('Deve retornar os serviços disponiveis a partir de uma conta "client"', async () => {
       const clientLogedIn = await request(app.getHttpServer())
         .post(SigninRouteUrl)

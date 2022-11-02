@@ -2,36 +2,30 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
-import { EmployeeService } from 'src/modules/employee/employee.service';
-import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { HttpResponse } from 'src/utils/http-responses';
-import { EMPLOYEE, IS_PUBLIC } from '../decorator';
+import { NOT_AUTHORIZED, UserType } from '../decorator';
 
 @Injectable()
-export class AccessControlGuard extends AuthGuard('jwt') {
-  constructor(
-    private reflactor: Reflector,
-    private prismaService: PrismaService,
-    private employeeService: EmployeeService,
-  ) {
+export class NotAuthorizedGuard extends AuthGuard('jwt') {
+  constructor(private reflactor: Reflector) {
     super();
   }
 
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const isEmployee = this.reflactor.getAllAndOverride<boolean>(EMPLOYEE, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const notAuthorized = this.reflactor.getAllAndOverride<UserType>(
+      NOT_AUTHORIZED,
+      [context.getHandler(), context.getClass()],
+    );
 
-    if (!isEmployee) {
+    if (!notAuthorized) {
       return true;
     }
 
     const { user } = context.switchToHttp().getRequest();
 
-    if (user.access !== 'employee') {
+    if (user.access === notAuthorized) {
       throw HttpResponse.forbidden('Acesso não autorizado!');
     }
 

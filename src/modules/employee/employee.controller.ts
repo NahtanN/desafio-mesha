@@ -2,7 +2,7 @@ import { Controller, Param, Patch } from '@nestjs/common';
 import { Attendance } from '@prisma/client';
 import { HttpResponse } from 'src/utils';
 import { AttendanceService } from '../attendance/attendance.service';
-import { Employee, GetCurrentUser } from '../auth/decorator';
+import { GetCurrentUser, NotAuthorized, UserType } from '../auth/decorator';
 import { EmployeeService } from './employee.service';
 
 @Controller('employee')
@@ -12,7 +12,7 @@ export class EmployeeController {
     private readonly employeeService: EmployeeService,
   ) {}
 
-  @Employee()
+  @NotAuthorized(UserType.CLIENT)
   @Patch('/attendance/start/:id')
   async startAttendance(
     @GetCurrentUser('sub') sub: number,
@@ -67,7 +67,7 @@ export class EmployeeController {
     return HttpResponse.ok('Atendimento iniciado!', attendanceUpdated);
   }
 
-  @Employee()
+  @NotAuthorized(UserType.CLIENT)
   @Patch('/attendance/end/:id')
   async endAttendance(
     @GetCurrentUser('sub') sub: number,
