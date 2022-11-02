@@ -13,7 +13,6 @@ async function bootstrap() {
   app.enableCors();
   app.setGlobalPrefix(globalPrefixer);
 
-  app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new CustomValidationPipe());
 
   await app.listen(port, () =>

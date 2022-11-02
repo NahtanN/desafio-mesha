@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { HttpResponse } from 'src/utils';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -14,7 +15,6 @@ export class ClientService {
         select,
       });
     } catch (err) {
-      console.log(err);
       throw HttpResponse.internalServerError(err);
     }
   }
@@ -25,8 +25,14 @@ export class ClientService {
         data,
       });
     } catch (err) {
-      console.log(err);
-      throw HttpResponse.internalServerError(err);
+      if (
+        err instanceof PrismaClientKnownRequestError &&
+        err.code === 'P2002'
+      ) {
+        throw HttpResponse.badRequest('Email já em uso!', err);
+      } else {
+        throw HttpResponse.internalServerError(err);
+      }
     }
   }
 }
