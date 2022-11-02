@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { HttpResponse } from 'src/utils';
 import { GetCurrentUser, NotAuthorized, UserType } from '../auth/decorator';
 import { AttendanceService } from './attendance.service';
-import { CreateAttendance } from './dto';
+import { CreateAttendanceDto } from './dto';
 
 @Controller('attendance')
 export class AttendanceController {
@@ -46,7 +46,7 @@ export class AttendanceController {
   @Post()
   async createAttendances(
     @GetCurrentUser('sub') sub: number,
-    @Body() createAttendanceBody: CreateAttendance,
+    @Body() createAttendanceBody: CreateAttendanceDto,
   ): Promise<HttpResponse> {
     const { services } = createAttendanceBody;
 

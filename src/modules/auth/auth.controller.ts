@@ -1,11 +1,12 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Client, Employee, Prisma } from '@prisma/client';
 import { HttpResponse } from 'src/utils/http-responses';
 import { ClientService } from '../client/client.service';
 import { EmployeeService } from '../employee/employee.service';
 import { AuthService } from './auth.service';
 import { Public } from './decorator';
-import { SigninDTO, SignupDTO } from './dto';
+import { SigninDto, SignupDto } from './dto';
 import { TokenAccessType } from './types';
 
 @Controller('auth')
@@ -16,9 +17,18 @@ export class AuthController {
     private readonly employeeService: EmployeeService,
   ) {}
 
+  @ApiTags('Auth')
+  @ApiBody({
+    type: SignupDto,
+    description:
+      'Caso deseje criar um usuario do tipo "funcionario", adicione a propriedade "type" ao Body da requisição. Caso contrario, pode omitir essa propriedade.',
+  })
+  @ApiResponse({
+    type: HttpResponse,
+  })
   @Public()
   @Post('signup')
-  async signup(@Body() signupDTO: SignupDTO): Promise<HttpResponse> {
+  async signup(@Body() signupDTO: SignupDto): Promise<HttpResponse> {
     const { email, password, name, type } = signupDTO;
 
     // Criptografar senha
@@ -45,9 +55,18 @@ export class AuthController {
     return HttpResponse.created(`${responseUserType} cadastrado com sucesso!`);
   }
 
+  @ApiTags('Auth')
+  @ApiBody({
+    type: SigninDto,
+    description:
+      'Caso deseje logar como um usuario do tipo "funcionario", adicione a propriedade "type" ao Body da requisição. Caso contrario, pode omitir essa propriedade.',
+  })
+  @ApiResponse({
+    type: HttpResponse,
+  })
   @Public()
   @Post('signin')
-  async signin(@Body() signinDTO: SigninDTO): Promise<HttpResponse> {
+  async signin(@Body() signinDTO: SigninDto): Promise<HttpResponse> {
     const { password, email, type } = signinDTO;
 
     let user: Partial<Client | Employee>;

@@ -1,6 +1,13 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export class HttpResponse {
+  @ApiProperty({})
   code: number;
+
+  @ApiProperty({})
   message: string;
+
+  @ApiProperty({})
   data: any;
 
   constructor(code: number, message: string, data: any) {

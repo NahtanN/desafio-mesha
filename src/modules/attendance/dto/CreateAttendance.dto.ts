@@ -1,6 +1,6 @@
-import { IsArray, IsNotEmpty, ValidateNested } from 'class-validator';
+import { IsArray, IsNotEmpty } from 'class-validator';
 
-export class CreateAttendance {
+export class CreateAttendanceDto {
   @IsNotEmpty()
   @IsArray()
   services: number[];
