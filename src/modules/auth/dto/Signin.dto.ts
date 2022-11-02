@@ -21,6 +21,7 @@ export class SigninDto {
     example: 'employee',
     description:
       'Adicione essa propriedade com o tipo "employee" caso deseje criar uma conta do tipo "funcinario". Caso contratio, pode omitir essa propriedade',
+    required: false,
   })
   @IsOptional()
   @IsString()
