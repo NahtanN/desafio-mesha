@@ -9,3 +9,85 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Client {
+  id       Int     @id @default(autoincrement())
+  name     String?
+  email    String  @unique
+  password String?
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt()
+  deletedAt  DateTime?
+  Attendance Attendance[]
+}
+
+model Employee {
+  id       Int     @id @default(autoincrement())
+  name     String?
+  email    String  @unique
+  password String?
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt()
+  deletedAt  DateTime?
+  Attendance Attendance[]
+}
+
+model Service {
+  id                   Int          @id @default(autoincrement())
+  name                 String
+  description          String
+  estimatedTime        Int
+  timeMeasure          TimeMeasures @default(MINUTE)
+  value                Int
+  commissionPercentage Int
+  commissionValue      Int
+
+  AttendanceServices AttendanceServices[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+}
+
+model Attendance {
+  id                        Int           @id @default(autoincrement())
+  clientId                  Int
+  employeeId                Int?
+  startedIn                 DateTime?
+  endedIn                   DateTime?
+  totalAttendanceTime       Int?
+  attendanceTimeMeasure     TimeMeasures?
+  totalValue                Int
+  totalCommissionPercentage Int
+  totalCommissionValue      Int
+
+  Client             Client               @relation(fields: [clientId], references: [id])
+  Employee           Employee?            @relation(fields: [employeeId], references: [id])
+  AttendanceServices AttendanceServices[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+}
+
+model AttendanceServices {
+  id           Int @id @default(autoincrement())
+  attendanceId Int
+  serviceId    Int
+
+  Atendance Attendance @relation(fields: [attendanceId], references: [id], onDelete: Cascade)
+  Service   Service    @relation(fields: [serviceId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+}
+
+enum TimeMeasures {
+  DAY
+  HOUR
+  MINUTE
+  SECONDS
+}
