@@ -5,12 +5,15 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "yarn services:up && dotenv -v NODE_ENV=development -e .env.development -- nest start --watch",
+    "start:dev": "yarn services:up && sleep 2 && yarn prisma:dev:start && dotenv -v NODE_ENV=development -e .env.development -- nest start --watch",
     "services:up": "docker-compose -f infra/docker-compose.development.yml up -d",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -20,6 +23,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "commit": "cz",
+    "prisma:dev:start": "dotenv -e .env.development -- npx prisma migrate reset --force && yarn prisma:dev:seed",
+    "prisma:dev:seed": "dotenv -e .env.development -- npx prisma db seed",
     "prisma:dev:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name",
     "prisma:dev:push": "dotenv -e .env.development -- npx prisma db push",
     "prisma:dev:studio": "dotenv -e .env.development npx prisma studio",
