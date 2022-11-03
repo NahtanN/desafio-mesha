@@ -23,7 +23,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "commit": "cz",
-    "prisma:dev:start": "dotenv -e .env.development -- npx prisma migrate reset --force && yarn prisma:dev:seed",
+    "prisma:dev:start": "dotenv -e .env.development -- npx prisma migrate deploy && yarn prisma:dev:seed",
     "prisma:dev:seed": "dotenv -e .env.development -- npx prisma db seed",
     "prisma:dev:migrate": "dotenv -e .env.development -- npx prisma migrate dev --name",
     "prisma:dev:push": "dotenv -e .env.development -- npx prisma db push",
