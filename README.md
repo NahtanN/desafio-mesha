@@ -64,3 +64,17 @@ $ yarn test:e2e
 ## Util
 
 Caso esteja utilizando o [Insomnia](https://insomnia.rest/), você pode importar o arquivo na diretório [/insomnia](https://github.com/NahtanN/desafio-mesha/tree/master/insomnia).
+
+Apos o servidor iniciar, execute o comando <code>yarn prisma:dev:studio</code> para utilizar a ferramente de visualização de banco de dados do Prisma.
+
+Após o Seed do banco de dados você pode utilizar os seguintes casdastros para fazer login:
+
+```bash
+# Login como cliente
+- (email) client1@test.com
+- (senha) 123456
+
+# Login como funcionário
+- (email) employee1@test.com
+- (senha) 123456
+```
