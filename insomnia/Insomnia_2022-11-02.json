@@ -1,21 +1,21 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2022-11-01T17:51:45.909Z",
+  "__export_date": "2022-11-03T01:53:39.901Z",
   "__export_source": "insomnia.desktop.app:v2022.6.0",
   "resources": [
     {
       "_id": "req_beb77bfc74b14db59ce37caac3dc9227",
       "parentId": "fld_0fbf248085734d6f91bd692de06056eb",
-      "modified": 1667324875992,
+      "modified": 1667440400777,
       "created": 1667271918018,
       "url": "{{ _.URL }}/auth/signin",
-      "name": "Login as Client",
+      "name": "Login",
       "description": "",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"t10@t10.com\",\n\t\"password\": \"123456\",\n\t\"type\": \"employee\"\n}"
+        "text": "{\n\t\"email\": \"employee1@test.com\",\n\t\"password\": \"123456\",\n\t\"type\": \"employee\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -73,7 +73,7 @@
     {
       "_id": "req_adde0e5457754cec910397a6e32c0229",
       "parentId": "fld_0fbf248085734d6f91bd692de06056eb",
-      "modified": 1667324874332,
+      "modified": 1667437642337,
       "created": 1667271654787,
       "url": "{{ _.URL }}/auth/signup",
       "name": "Create User",
@@ -81,7 +81,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"name\": \"Teste 10\",\n\t\"email\": \"t10@t10.com\",\n\t\"password\": \"123456\",\n\t\"type\": \"employee\"\n}"
+        "text": "{\n\t\"name\": \"Teste 10\",\n\t\"email\": \"asf@hfgd.com\",\n\t\"password\": \"123456\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -105,9 +105,9 @@
     {
       "_id": "req_36e3f0992ff44e66b8665d63c0829c33",
       "parentId": "fld_e32ced70c0554e52906220be82d2be61",
-      "modified": 1667324945326,
+      "modified": 1667437610150,
       "created": 1667263584445,
-      "url": "{{ _.URL }}/employee/attendance/end/19",
+      "url": "{{ _.URL }}/employee/attendance/end/1",
       "name": "End Attendance",
       "description": "",
       "method": "PATCH",
@@ -148,9 +148,9 @@
     {
       "_id": "req_5010e4ace4394c87904d49796be79d63",
       "parentId": "fld_e32ced70c0554e52906220be82d2be61",
-      "modified": 1667324969447,
+      "modified": 1667437591465,
       "created": 1667261888724,
-      "url": "{{ _.URL }}/employee/attendance/start/19",
+      "url": "{{ _.URL }}/employee/attendance/start/1",
       "name": "Start Attendance",
       "description": "",
       "method": "PATCH",
@@ -221,7 +221,7 @@
     {
       "_id": "req_908ac80d26e54e77b55974090f4475d8",
       "parentId": "fld_dd9254c8d3fe4b93902143502d319278",
-      "modified": 1667324818254,
+      "modified": 1667437583077,
       "created": 1667254102644,
       "url": "{{ _.URL }}/attendance",
       "name": "Create",
@@ -229,7 +229,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"services\": [10, 12]\n}"
+        "text": "{\n\t\"services\": [1]\n}"
       },
       "parameters": [],
       "headers": [
@@ -302,7 +302,7 @@
     {
       "_id": "req_3caf06b1c0824098986fad477c952613",
       "parentId": "fld_10bec68aeb5f428cb866490f2345a902",
-      "modified": 1667324813076,
+      "modified": 1667438211097,
       "created": 1667251750658,
       "url": "{{ _.URL }}/service",
       "name": "Create",

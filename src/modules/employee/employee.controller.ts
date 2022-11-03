@@ -1,4 +1,5 @@
 import { Controller, Param, Patch } from '@nestjs/common';
+import { ApiBody, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Attendance } from '@prisma/client';
 import { HttpResponse } from 'src/utils';
 import { AttendanceService } from '../attendance/attendance.service';
@@ -12,6 +13,40 @@ export class EmployeeController {
     private readonly employeeService: EmployeeService,
   ) {}
 
+  @ApiTags('Employee')
+  @ApiHeader({
+    name: 'Authorization',
+    schema: {
+      example: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOj...',
+    },
+  })
+  @ApiResponse({
+    description: 'Inicia um atendimento',
+    status: 200,
+    schema: {
+      example: {
+        code: 200,
+        message: 'Atendimento iniciado!',
+        data: {
+          startedIn: '2022-11-02T23:05:37.164Z',
+          Client: {
+            name: 'Teste 10',
+            email: 'asf@hfgd.com',
+          },
+          AttendanceServices: [
+            {
+              Service: {
+                name: 'servico 10',
+                description: 'Descricao do servico 4',
+                estimatedTime: 50,
+                timeMeasure: 'MINUTE',
+              },
+            },
+          ],
+        },
+      },
+    },
+  })
   @NotAuthorized(UserType.CLIENT)
   @Patch('/attendance/start/:id')
   async startAttendance(
@@ -67,6 +102,44 @@ export class EmployeeController {
     return HttpResponse.ok('Atendimento iniciado!', attendanceUpdated);
   }
 
+  @ApiTags('Employee')
+  @ApiHeader({
+    name: 'Authorization',
+    schema: {
+      example: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOj...',
+    },
+  })
+  @ApiResponse({
+    description: 'Finaliza um atendimento',
+    status: 200,
+    schema: {
+      example: {
+        code: 200,
+        message: 'Atendimento finalizado!',
+        data: {
+          startedIn: '2022-11-02T23:05:37.164Z',
+          endedIn: '2022-11-02T23:06:36.550Z',
+          totalCommissionValue: 2104,
+          totalAttendanceTime: 59,
+          attendanceTimeMeasure: 'SECONDS',
+          Client: {
+            name: 'Teste 10',
+            email: 'asf@hfgd.com',
+          },
+          AttendanceServices: [
+            {
+              Service: {
+                name: 'servico 10',
+                description: 'Descricao do servico 4',
+                estimatedTime: 50,
+                timeMeasure: 'MINUTE',
+              },
+            },
+          ],
+        },
+      },
+    },
+  })
   @NotAuthorized(UserType.CLIENT)
   @Patch('/attendance/end/:id')
   async endAttendance(

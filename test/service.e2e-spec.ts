@@ -135,6 +135,20 @@ describe('ServiceController (e2e)', () => {
           expect(message).toBe('Serviços retornado com sucesso!');
           expect(data).toStrictEqual([
             {
+              name: 'servico 1',
+              description: 'Descricao do servico 1',
+              estimatedTime: 50,
+              timeMeasure: 'MINUTE',
+              value: 12376,
+            },
+            {
+              name: 'servico 2',
+              description: 'Descricao do servico 2',
+              estimatedTime: 50,
+              timeMeasure: 'MINUTE',
+              value: 12376,
+            },
+            {
               name: 'servico 3',
               description: 'Descricao do servico 3',
               estimatedTime: 50,
@@ -170,6 +184,20 @@ describe('ServiceController (e2e)', () => {
 
           expect(message).toBe('Serviços retornado com sucesso!');
           expect(data).toStrictEqual([
+            {
+              name: 'servico 1',
+              description: 'Descricao do servico 1',
+              estimatedTime: 50,
+              timeMeasure: 'MINUTE',
+              value: 12376,
+            },
+            {
+              name: 'servico 2',
+              description: 'Descricao do servico 2',
+              estimatedTime: 50,
+              timeMeasure: 'MINUTE',
+              value: 12376,
+            },
             {
               name: 'servico 3',
               description: 'Descricao do servico 3',
