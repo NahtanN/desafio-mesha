@@ -49,11 +49,7 @@ $ dotenv -v NODE_ENV=development -e .env.development -- nest start --watch
 
 </details>
 
-<br>
-
 <p>Após iniciar o servidor, a documentação com a descrição das rotas ficará disponível na rota <code>http://localhost:3001/docs</code>.</p>
-
-<br>
 
 ## Testes
 
@@ -67,4 +63,4 @@ $ yarn test:e2e
 
 ## Util
 
-Caso esteja utilizando o [Insomnia](https://insomnia.rest/), você pode importar o arquivo na diretório <code>./insomnia</code>.
+Caso esteja utilizando o [Insomnia](https://insomnia.rest/), você pode importar o arquivo na diretório [/insomnia](https://github.com/NahtanN/desafio-mesha/tree/master/insomnia).
