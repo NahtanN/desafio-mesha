@@ -1,5 +1,11 @@
 <h1 align="center">Desafio Mesha (Guia)</h1>
 
+## Requisitos
+
+- Node v16.17.1
+- Docker
+- docker-compose
+
 ## Comece clonando o projeto
 
 ```bash
