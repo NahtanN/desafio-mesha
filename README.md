@@ -9,7 +9,7 @@
 ## Comece clonando o projeto
 
 ```bash
-$ git clone https://github.com/NahtanN/desafio-mesha
+$ git clone https://github.com/NahtanN/desafio-nodejs
 ```
 
 ## Instale as dependências
